@@ -41,8 +41,25 @@ ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 IF(WIN32)
 	
+	# This if for Visual Studio 2015.
 
-	set_target_properties(MyTarget PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Source/")
+	include_directories("${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/_Win/GLFW/include/")
+   	include_directories("${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/_Win/GLEW/include/")
+
+	find_package(OpenGL)
+
+   	IF (OPENGL_FOUND)
+
+   		include_directories(${OPENGL_INCLUDE_DIR})
+   		target_link_libraries(Engine ${OPENGL_LIBRARIES})
+
+   	ENDIF (OPENGL_FOUND)
+
+	# target_link_libraries(Engine "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/_Win/GLEW/lib/glew32.lib")
+	target_link_libraries(Engine "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/_Win/GLEW/lib/glew32s.lib")
+	target_link_libraries(Engine "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/_Win/GLFW/lib/glfw3.lib")
+	
+	set_target_properties(Engine PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Source/")
 
 
 ENDIF(WIN32)
