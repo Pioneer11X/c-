@@ -1,9 +1,18 @@
 
 
 cmake_minimum_required (VERSION 2.6)
-project(C++)
+project(Engine)
 
-add_executable(C++ main.cpp)
+file(GLOB Engine_SRC
+	"Source/*.h"
+	"Source/*.cpp"
+	"Source/Shaders/*.vs"
+	"Source/Shaders/*.frag"
+)
+
+add_definitions()
+
+add_executable(Engine ${Engine_SRC})
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
@@ -12,24 +21,28 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
    # Use the homebrew installation location to make it behave well.
    include_directories("/usr/local/Cellar/glfw/3.2.1/include/")
-   include_directories("/usr/local/Cellar/glew/2.0.0/include/GL/")
+   include_directories("/usr/local/Cellar/glew/2.0.0/include/")
 
    find_package(OpenGL)
 
    IF (OPENGL_FOUND)
 
    		include_directories(${OPENGL_INCLUDE_DIR})
-   		target_link_libraries(C++ ${OPENGL_LIBRARIES})
+   		target_link_libraries(Engine ${OPENGL_LIBRARIES})
 
    ENDIF (OPENGL_FOUND)
 
-   target_link_libraries(C++ "/usr/local/Cellar/glew/2.0.0/lib/libGLEW.2.0.0.dylib")
-   target_link_libraries(C++ "/usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib")
+   target_link_libraries(Engine "/usr/local/Cellar/glew/2.0.0/lib/libGLEW.2.0.0.dylib")
+   target_link_libraries(Engine "/usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib")
+
+   # You need to manually set the Working Directory. Similar to the VS_DEEBBUGER_WORKING_DIRECTORY.
 
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 IF(WIN32)
 	
+
+	set_target_properties(MyTarget PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Source/")
 
 
 ENDIF(WIN32)
