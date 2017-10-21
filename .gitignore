@@ -33,3 +33,5 @@
 
 #Build Directory
 builds
+Win32
+x64
