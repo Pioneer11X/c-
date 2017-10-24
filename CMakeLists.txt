@@ -8,11 +8,17 @@ file(GLOB Engine_SRC
 	"Source/*.cpp"
 	"Source/Shaders/*.vs"
 	"Source/Shaders/*.frag"
+	"Source/glm/*"
+)
+
+file(GLOB GLM_Src
+	"Source/glm/*"
 )
 
 add_definitions()
 
 add_executable(Engine ${Engine_SRC})
+source_group("glm" FILES ${GLM_Src})
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 

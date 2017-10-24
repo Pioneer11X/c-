@@ -21,11 +21,11 @@ public:
 	GenericMesh(char * _fileName);
 	~GenericMesh();
 
-	virtual void SetBuffers();
+	virtual void SetBuffers() = 0;
 
-	inline uint16_t * getIndexData() { return indices;  }
+	inline uint16_t * getIndexData() { return indices; }
 
-	inline uint16_t GetIndexCount() { return indexCount;  }
+	inline uint16_t GetIndexCount() { return indexCount; }
 	inline uint16_t GetVertexCount() { return vertexCount; }
 };
 

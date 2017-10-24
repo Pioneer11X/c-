@@ -2,9 +2,9 @@
 #include "BasicVertex.h"
 #include "GenericMesh.h"
 
-#include "glm\glm.hpp"
+#include "glm/glm.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
-#include "glm\gtx\transform.hpp"
+#include "glm/gtx/transform.hpp"
 
 using namespace std;
 using namespace glm;

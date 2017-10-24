@@ -12,11 +12,12 @@ public:
 	GenericGame();
 	~GenericGame();
 
-	virtual void Init();
+    // Abstracting the Class. The = 0 makes it pure virtual, which makes this class Abstract.
+	virtual void Init() = 0;
 
-	virtual void Update();
-	virtual void Draw();
-	virtual void handleUserEvents();
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
+	virtual void handleUserEvents() = 0;
 
 };
 
