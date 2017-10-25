@@ -10,11 +10,44 @@
 
 #include "GenericGame.h"
 
+// GLEW
+#ifndef GLEW_STATIC
+#define GLEW_STATIC
+#endif
+#include <GL/glew.h>
+
+// GLFW
+#include <GLFW/glfw3.h>
+
+#include "Shader.h"
+
 class GL_Game : public  GenericGame {
     
+    GLuint WIDTH, HEIGHT;
     
+    GLuint VBO, VAO, EBO;
+    
+    GLFWwindow * window;
+    
+    Shader ourShader;
+    
+    void Draw();
     
 public:
+    
+    GL_Game();
+    
+    bool Init();
+    
+    void Update();
+    
+    
+    
+    void Cleanup();
+    
+    void handleUserEvents();
+    
+    ~GL_Game() { };
     
 };
 

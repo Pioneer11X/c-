@@ -13,7 +13,11 @@ class Shader
 public:
     GLuint Program;
     // Constructor generates the shader on the fly
-    Shader( const GLchar *vertexPath, const GLchar *fragmentPath )
+    Shader(){
+        
+    }
+    
+    void Init(const GLchar *vertexPath, const GLchar *fragmentPath)
     {
         // 1. Retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
@@ -88,6 +92,8 @@ public:
         glDeleteShader( fragment );
         
     }
+    
+    
     // Uses the current shader
     void Use( )
     {
