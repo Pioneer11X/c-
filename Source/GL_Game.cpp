@@ -20,6 +20,8 @@ GL_Game::GL_Game(){
     // Build and compile our shader program
     ourShader = Shader();
 
+	window = nullptr;
+
     Init();
 
 }

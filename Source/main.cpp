@@ -119,13 +119,17 @@ int main( )
 //
 //    return EXIT_SUCCESS;
     
-    GL_Game glGame;
+//    GL_Game glGame;
+	
+	GL_Game * glGame = new GL_Game();
     
-    glGame.Init();
+    // glGame.Init();
     
-    glGame.Update();
+    glGame->Update();
     
-    glGame.Cleanup();
+    glGame->Cleanup();
+
+	delete glGame;
     
     return EXIT_SUCCESS;
     
