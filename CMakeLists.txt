@@ -9,6 +9,7 @@ file(GLOB Engine_SRC
 	"Source/Shaders/*.vs"
 	"Source/Shaders/*.frag"
 	"Source/glm/*"
+	"Source/*"
 )
 
 file(GLOB GLM_Src
