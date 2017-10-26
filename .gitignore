@@ -38,3 +38,6 @@ Source/PS4SpecificFiles
 builds
 Win32
 x64
+*.log
+*.log
+/Engine.dir/Debug
