@@ -21,6 +21,9 @@
 
 #include "Shader.h"
 
+#include "GL_Mesh.h"
+#include <vector>
+
 class GL_Game : public  GenericGame {
     
     GLuint WIDTH, HEIGHT;

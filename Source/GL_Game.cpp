@@ -5,9 +5,11 @@
 //  Created by Sravan Karuturi on 10/24/17.
 //
 
+#pragma once
 #include <stdio.h>
 #include <iostream>
 #include "GL_Game.h"
+
 
 using namespace std;
 
@@ -29,16 +31,18 @@ GL_Game::GL_Game(){
 bool GL_Game::Init(){
     
     // Set up vertex data (and buffer(s)) and attribute pointers
-    GLfloat vertices[] =
+    BasicVertex bVertices[] =
     {
         // Positions         // Colors
-        0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  // Bottom Right
-        -0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,  // Bottom Left
-        -0.5f,  0.5f, 0.0f,   0.5f, 0.0f, 1.0f,   // Top Left
-        0.5f,  0.5f, 0.0f,   0.0f, 0.5f, 1.0f   // Top Right
+        BasicVertex(0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f),  // Bottom Right
+        BasicVertex(-0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f),  // Bottom Left
+        BasicVertex(-0.5f,  0.5f, 0.0f,   0.5f, 0.0f, 1.0f),   // Top Left
+        BasicVertex(0.5f,  0.5f, 0.0f,   0.0f, 0.5f, 1.0f)   // Top Right
     };
+
+	
     
-    unsigned int indices[] = {  // note that we start from 0!
+    uint32_t indices[] = {  // note that we start from 0!
         0, 1, 3,  // first Triangle
         1, 2, 3   // second Triangle
     };
@@ -95,44 +99,22 @@ bool GL_Game::Init(){
     glBindVertexArray( VAO );
     
     glBindBuffer( GL_ARRAY_BUFFER, VBO );
-    glBufferData( GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(bVertices), bVertices, GL_STATIC_DRAW );
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     
     // Position attribute
-    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof( GLfloat ), ( GLvoid * ) 0 );
+    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * ) 0 );
     glEnableVertexAttribArray( 0 );
     // Color attribute
-    glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof( GLfloat ), ( GLvoid * )( 3 * sizeof( GLfloat ) ) );
+    glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * )( 3 * sizeof( GLfloat ) ) );
     glEnableVertexAttribArray( 1 );
     
     glBindVertexArray( 0 ); // Unbind VAO
     
-    // Game loop
-    while ( !glfwWindowShouldClose( window ) )
-    {
-        // Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
-        glfwPollEvents( );
-        
-        // Render
-        // Clear the colorbuffer
-        glClearColor( 0.2f, 0.3f, 0.3f, 1.0f );
-        glClear( GL_COLOR_BUFFER_BIT );
-        
-        // Draw the triangle
-        ourShader.Use( );
-        glBindVertexArray( VAO );
-        
-        // glDrawArrays(GL_TRIANGLES, 0, 3);
-        
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
-        
-        // Swap the screen buffers
-        glfwSwapBuffers( window );
-    }
+
     
     return EXIT_SUCCESS;
     
@@ -140,7 +122,29 @@ bool GL_Game::Init(){
 
 void GL_Game::Update(){
     
+	// Game loop
+	while (!glfwWindowShouldClose(window))
+	{
+		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+		glfwPollEvents();
 
+		// Render
+		// Clear the colorbuffer
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Draw the triangle
+		ourShader.Use();
+		glBindVertexArray(VAO);
+
+		// glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+
+		// Swap the screen buffers
+		glfwSwapBuffers(window);
+	}
     
 }
 
