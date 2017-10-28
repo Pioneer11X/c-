@@ -30,7 +30,7 @@ GL_Game::GL_Game(){
 
 bool GL_Game::Init(){
     
-    // Set up vertex data (and buffer(s)) and attribute pointers
+    //// Set up vertex data (and buffer(s)) and attribute pointers
     BasicVertex bVertices[] =
     {
         // Positions         // Colors
@@ -41,11 +41,11 @@ bool GL_Game::Init(){
     };
 
 	
-    
-    uint32_t indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        1, 2, 3   // second Triangle
-    };
+    //
+    //uint32_t indices[] = {  // note that we start from 0!
+    //    0, 1, 3,  // first Triangle
+    //    1, 2, 3   // second Triangle
+    //};
     
     // Init calls for OpenGL.
     
@@ -91,28 +91,38 @@ bool GL_Game::Init(){
     glViewport( 0, 0, screenWidth, screenHeight );
     
     ourShader.Init("Shaders/core.vs", "Shaders/core.frag" );
+
+	std::vector<BasicVertex> vertices;
+	vertices.push_back(bVertices[0]);
+	vertices.push_back(bVertices[1]);
+	vertices.push_back(bVertices[2]);
+	vertices.push_back(bVertices[3]);
+
+	std::vector<uint32_t> bindices = { 0 , 1, 3, 1, 2, 3 };
+
+	mesh = new Mesh(vertices, bindices);
     
-    glGenVertexArrays( 1, &VAO );
-    glGenBuffers( 1, &VBO );
-    glGenBuffers(1, &EBO);
-    // Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
-    glBindVertexArray( VAO );
-    
-    glBindBuffer( GL_ARRAY_BUFFER, VBO );
-    glBufferData( GL_ARRAY_BUFFER, sizeof(bVertices), bVertices, GL_STATIC_DRAW );
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
-    
-    // Position attribute
-    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * ) 0 );
-    glEnableVertexAttribArray( 0 );
-    // Color attribute
-    glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * )( 3 * sizeof( GLfloat ) ) );
-    glEnableVertexAttribArray( 1 );
-    
-    glBindVertexArray( 0 ); // Unbind VAO
+    //glGenVertexArrays( 1, &VAO );
+    //glGenBuffers( 1, &VBO );
+    //glGenBuffers(1, &EBO);
+    //// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
+    //glBindVertexArray( VAO );
+    //
+    //glBindBuffer( GL_ARRAY_BUFFER, VBO );
+    //glBufferData( GL_ARRAY_BUFFER, sizeof(bVertices), bVertices, GL_STATIC_DRAW );
+    //
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    //
+    //
+    //// Position attribute
+    //glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * ) 0 );
+    //glEnableVertexAttribArray( 0 );
+    //// Color attribute
+    //glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * )( 3 * sizeof( GLfloat ) ) );
+    //glEnableVertexAttribArray( 1 );
+    //
+    //glBindVertexArray( 0 ); // Unbind VAO
     
 
     
@@ -135,12 +145,13 @@ void GL_Game::Update(){
 
 		// Draw the triangle
 		ourShader.Use();
-		glBindVertexArray(VAO);
+		//glBindVertexArray(VAO);
 
-		// glDrawArrays(GL_TRIANGLES, 0, 3);
+		//// glDrawArrays(GL_TRIANGLES, 0, 3);
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glBindVertexArray(0);
+		mesh->Draw(ourShader);
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
@@ -166,6 +177,8 @@ void GL_Game::Cleanup(){
 
     // Terminate GLFW, clearing any resources allocated by GLFW.
     glfwTerminate( );
+
+	delete mesh;
     
     //    return EXIT_SUCCESS;
     

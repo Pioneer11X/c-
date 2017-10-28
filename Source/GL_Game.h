@@ -5,6 +5,7 @@
 //  Created by Sravan Karuturi on 10/24/17.
 //
 
+
 #ifndef GL_Game_h
 #define GL_Game_h
 
@@ -33,6 +34,8 @@ class GL_Game : public  GenericGame {
     GLFWwindow * window;
     
     Shader ourShader;
+
+	Mesh * mesh;
     
     void Draw();
     

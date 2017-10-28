@@ -34,7 +34,7 @@ public:
 
 	/*  Functions  */
 	// constructor
-	Mesh(vector<BasicVertex> vertices, vector<unsigned int> indices)
+	Mesh(vector<BasicVertex> vertices, vector<uint32_t> indices)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
