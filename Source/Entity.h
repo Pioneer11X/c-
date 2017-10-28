@@ -1,10 +1,16 @@
 #pragma once
 #include "BasicVertex.h"
-#include "GenericMesh.h"
+
+#include "GL_Mesh.h"
 
 #include "glm/glm.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
+#include "Shader.h"
+
+#include <vector>
 
 using namespace std;
 using namespace glm;
@@ -12,7 +18,7 @@ using namespace glm;
 class Entity
 {
 
-	GenericMesh * mesh;
+	std::vector<GL_Mesh *> meshes;
 
 	mat4x4 worldMatrix;
 	mat4x4 transMatrix;
@@ -27,7 +33,7 @@ class Entity
 
 public:
 
-	Entity(GenericMesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal);
+	Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _scal);
 	~Entity();
 
 	void MoveRight(float factor);
@@ -41,6 +47,6 @@ public:
 
 	mat4x4 GetWorldMatrix();
 
-	inline  GenericMesh * GetMesh() { return mesh; }
+	void GLDraw(Shader _shader);
 
 };

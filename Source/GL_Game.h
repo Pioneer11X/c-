@@ -10,32 +10,29 @@
 #define GL_Game_h
 
 #include "GenericGame.h"
+#include "Entity.h"
+#include <vector>
 
 // GLEW
 #ifndef GLEW_STATIC
 #define GLEW_STATIC
-#endif
 #include <GL/glew.h>
+#endif
 
 // GLFW
 #include <GLFW/glfw3.h>
-
-#include "Shader.h"
-
-#include "GL_Mesh.h"
-#include <vector>
 
 class GL_Game : public  GenericGame {
     
     GLuint WIDTH, HEIGHT;
     
-    GLuint VBO, VAO, EBO;
-    
     GLFWwindow * window;
     
     Shader ourShader;
 
-	Mesh * mesh;
+	std::vector<GL_Mesh *> meshes;
+
+	Entity * entity;
     
     void Draw();
     

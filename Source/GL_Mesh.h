@@ -9,7 +9,10 @@
 #define GL_Mesh_h
 
 #pragma once
+#ifndef GLEW_STATIC
+#define GLEW_STATIC
 #include <GL\glew.h> // holds all OpenGL type declarations
+#endif // !GLEW_STATIC
 
 #include "glm\glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -22,10 +25,11 @@
 #include <iostream>
 #include <vector>
 #include "BasicVertex.h"
+#include "GenericMesh.h"
 
 using namespace std;
 
-class Mesh {
+class GL_Mesh {
 public:
 	/*  Mesh Data  */
 	vector<BasicVertex> vertices;
@@ -34,7 +38,7 @@ public:
 
 	/*  Functions  */
 	// constructor
-	Mesh(vector<BasicVertex> vertices, vector<uint32_t> indices)
+	GL_Mesh(vector<BasicVertex> vertices, vector<uint32_t> indices)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
