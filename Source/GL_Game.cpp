@@ -20,7 +20,8 @@ GL_Game::GL_Game(){
     HEIGHT = 600;
     
     // Build and compile our shader program
-    ourShader = Shader();
+	playerShader = GL_Shader();
+	blockShader = GL_Shader();
 
 	window = nullptr;
 
@@ -29,17 +30,7 @@ GL_Game::GL_Game(){
 }
 
 bool GL_Game::Init(){
-    
-    //// Set up vertex data (and buffer(s)) and attribute pointers
-    BasicVertex bVertices[] =
-    {
-        // Positions         // Colors
-        BasicVertex(0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f),  // Bottom Right
-        BasicVertex(-0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f), // Bottom Left
-        BasicVertex(-0.5f,  0.5f, 0.0f,   0.5f, 0.0f, 1.0f), // Top Left
-        BasicVertex(0.5f,  0.5f, 0.0f,   0.0f, 0.5f, 1.0f)   // Top Right
-    };
-
+   
     // Init calls for OpenGL.
     
     // Init GLFW
@@ -83,20 +74,10 @@ bool GL_Game::Init(){
     // Define the viewport dimensions
     glViewport( 0, 0, screenWidth, screenHeight );
     
-    ourShader.Init("Shaders/core.vs", "Shaders/core.frag" );
+	playerShader.Init("Shaders/core.vs", "Shaders/core.frag" );
+	blockShader.Init("Shaders/platform.vs", "Shaders/platform.frag");
 
-	std::vector<BasicVertex> vertices;
-	vertices.push_back(bVertices[0]);
-	vertices.push_back(bVertices[1]);
-	vertices.push_back(bVertices[2]);
-	vertices.push_back(bVertices[3]);
-
-	std::vector<uint32_t> bindices = { 0 , 1, 3, 1, 2, 3 };
-
-	GL_Mesh * mesh = new GL_Mesh(vertices, bindices);
-	meshes.push_back(mesh);
-
-	entity = new Entity(meshes, vec3(0.3f, 0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.2f, 1.0f, 1.0f));
+	CreateMeshes();
    
     return EXIT_SUCCESS;
     
@@ -116,11 +97,11 @@ void GL_Game::Update(){
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw the triangle
-		ourShader.Use();
+		playerShader.Use();
 
 		//entity->RotateZ(1.0f);
 
-		entity->GLDraw(ourShader);
+		playerEntity->GLDraw(playerShader);
 
 		//entity->MoveRight(1.0f);
 
@@ -130,6 +111,50 @@ void GL_Game::Update(){
 		processInput(window);
 	}
     
+}
+
+void GL_Game::CreateMeshes()
+{
+
+	// Setup Player Mesh
+	BasicVertex playerVerts[] = {
+		BasicVertex(0.2f, -0.25f, 0.0f,   1.0f, 0.2f, 0.2f),  // Bottom Right
+		BasicVertex(0.0f, -0.25f, 0.0f,   1.0f, 0.2f, 0.2f), // Bottom Left
+		BasicVertex(0.0f,  0.25f, 0.0f,   1.0f, 0.2f, 0.2f), // Top Left
+		BasicVertex(0.2f,  0.25f, 0.0f,    1.0f, 0.2f, 0.2f)   // Top Right
+	};
+
+	//// Set up vertex data (and buffer(s)) and attribute pointers
+	BasicVertex bVertices[] =
+	{
+		// Positions         // Colors
+		BasicVertex(0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f),  // Bottom Right
+		BasicVertex(-0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f), // Bottom Left
+		BasicVertex(-0.5f,  0.5f, 0.0f,   0.5f, 0.0f, 1.0f), // Top Left
+		BasicVertex(0.5f,  0.5f, 0.0f,   0.0f, 0.5f, 1.0f)   // Top Right
+	};
+
+	std::vector<BasicVertex> vertices;
+	vertices.push_back(bVertices[0]);
+	vertices.push_back(bVertices[1]);
+	vertices.push_back(bVertices[2]);
+	vertices.push_back(bVertices[3]);
+
+	std::vector<uint32_t> bindices = { 0 , 1, 3, 1, 2, 3 };
+
+	GL_Mesh * mesh = new GL_Mesh(vertices, bindices);
+	meshes.push_back(mesh);
+
+	vertices.clear();
+	for (int i = 0; i < sizeof(playerVerts) / sizeof(playerVerts[0]); i++) {
+		vertices.push_back(playerVerts[i]);
+	}
+
+	playerMesh = new GL_Mesh(vertices, bindices);
+
+	// playerEntity = new Entity(meshes, vec3(0.3f, 0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.2f, 1.0f, 1.0f));
+	playerEntity = new Entity(playerMesh, vec3(0.3f, 0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.5f, 0.5f, 0.5f));
+
 }
 
 void GL_Game::Draw(){
@@ -152,7 +177,8 @@ void GL_Game::processInput(GLFWwindow * window)
 		int axesCount;
 		const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
 
-		entity->MoveRight(axes[0]);
+		playerEntity->MoveRight(axes[0]);
+		playerEntity->MoveUp(axes[1]);
 
 		int buttonCount;
 		const unsigned char * buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
@@ -183,11 +209,21 @@ void GL_Game::Cleanup(){
     // Terminate GLFW, clearing any resources allocated by GLFW.
     glfwTerminate( );
 
-	delete entity;
+	delete playerEntity;
+
+	for (std::vector<Entity *>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
+		delete (*it);
+	}
 
 	for (std::vector<GL_Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
 		delete (*it);
 	}
+
+	if (playerMesh)
+		delete playerMesh;
+
+	//if (blockMesh)
+	//	delete blockMesh;
     
     //    return EXIT_SUCCESS;
     

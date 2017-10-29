@@ -8,12 +8,12 @@
 
 #include <GL/glew.h>
 
-class Shader
+class GL_Shader
 {
 public:
     GLuint Program;
     // Constructor generates the shader on the fly
-    Shader(){
+	GL_Shader(){
         
     }
     

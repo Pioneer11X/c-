@@ -28,11 +28,18 @@ class GL_Game : public  GenericGame {
     
     GLFWwindow * window;
     
-    Shader ourShader;
+	GL_Shader playerShader;
+	GL_Shader blockShader;
+
+	GL_Mesh * playerMesh;
+	GL_Mesh * blockMesh;
 
 	std::vector<GL_Mesh *> meshes;
 
-	Entity * entity;
+	Entity * playerEntity;
+	std::vector<Entity * > platformEntites;
+
+	void CreateMeshes();
     
     void Draw();
 
@@ -47,8 +54,6 @@ public:
     bool Init();
     
     void Update();
-    
-    
     
     void Cleanup();
     

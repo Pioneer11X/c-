@@ -34,6 +34,7 @@ class Entity
 public:
 
 	Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _scal);
+	Entity(GL_Mesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal);
 	~Entity();
 
 	void MoveRight(float factor);
@@ -47,6 +48,6 @@ public:
 
 	void RecalculateWorldMatrix();
 
-	void GLDraw(Shader _shader);
+	void GLDraw(GL_Shader _shader);
 
 };

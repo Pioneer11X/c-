@@ -17,6 +17,22 @@ Entity::Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _sca
 
 }
 
+Entity::Entity(GL_Mesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal)
+{
+
+	// Make a single element Mesh and pass it to the constructor
+	std::vector<GL_Mesh *> _meshes;
+	_meshes.push_back(_mesh);
+
+	meshes = _meshes;
+	translation = _trans;
+	rotation = _rot;
+	scaling = _scal;
+
+	dirty = true;
+
+}
+
 Entity::~Entity()
 {
 }
@@ -29,6 +45,13 @@ void Entity::MoveRight(float factor)
 	dirty = true;
 
 
+}
+
+void Entity::MoveUp(float factor)
+{
+	// TODO: This is frame dependant. We need an independant timer to get a fixed rate.
+	translation.y += factor * 0.01f;
+	dirty = true;
 }
 
 void Entity::RotateZ(float factor)
@@ -74,13 +97,14 @@ void Entity::RecalculateWorldMatrix()
 	// return worldMatrix;
 }
 
-void Entity::GLDraw(Shader _shader)
+void Entity::GLDraw(GL_Shader _shader)
 {
 
 	RecalculateWorldMatrix();
 
 	// Draw the meshes with the transformation of the Entity
 	unsigned int tranformLoc = glGetUniformLocation(_shader.Program, "transform");
+
 	// glUniformMatrix4fv(tranformLoc, 1, GL_FALSE, glm::value_ptr(glm::transpose(worldMatrix)));
 	glUniformMatrix4fv(tranformLoc, 1, GL_FALSE, glm::value_ptr(worldMatrix));
 

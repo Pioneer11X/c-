@@ -48,7 +48,7 @@ public:
 	}
 
 	// render the mesh
-	void Draw(Shader shader)
+	void Draw(GL_Shader shader)
 	{
 		// draw mesh
 		glBindVertexArray(VAO);
