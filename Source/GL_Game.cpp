@@ -103,6 +103,10 @@ void GL_Game::Update(){
 
 		playerEntity->GLDraw(playerShader);
 
+		for (std::vector<Entity *>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
+			(*it)->GLDraw(blockShader);
+		}
+
 		//entity->MoveRight(1.0f);
 
 		// Swap the screen buffers
@@ -125,25 +129,11 @@ void GL_Game::CreateMeshes()
 	};
 
 	//// Set up vertex data (and buffer(s)) and attribute pointers
-	BasicVertex bVertices[] =
-	{
-		// Positions         // Colors
-		BasicVertex(0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f),  // Bottom Right
-		BasicVertex(-0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f), // Bottom Left
-		BasicVertex(-0.5f,  0.5f, 0.0f,   0.5f, 0.0f, 1.0f), // Top Left
-		BasicVertex(0.5f,  0.5f, 0.0f,   0.0f, 0.5f, 1.0f)   // Top Right
-	};
 
 	std::vector<BasicVertex> vertices;
-	vertices.push_back(bVertices[0]);
-	vertices.push_back(bVertices[1]);
-	vertices.push_back(bVertices[2]);
-	vertices.push_back(bVertices[3]);
 
+	// For a Square.
 	std::vector<uint32_t> bindices = { 0 , 1, 3, 1, 2, 3 };
-
-	GL_Mesh * mesh = new GL_Mesh(vertices, bindices);
-	meshes.push_back(mesh);
 
 	vertices.clear();
 	for (int i = 0; i < sizeof(playerVerts) / sizeof(playerVerts[0]); i++) {
@@ -152,8 +142,26 @@ void GL_Game::CreateMeshes()
 
 	playerMesh = new GL_Mesh(vertices, bindices);
 
+	// Setup Platform Mesh
+	BasicVertex platformVerts[] = {
+		BasicVertex(0.2f, -0.2f, 0.0f,   1.0f, 0.5f, 0.2f),  // Bottom Right
+		BasicVertex(0.0f, -0.2f, 0.0f,   1.0f, 0.5f, 0.2f), // Bottom Left
+		BasicVertex(0.0f,  0.0f, 0.0f,   1.0f, 0.5f, 0.2f), // Top Left
+		BasicVertex(0.2f,  0.0f, 0.0f,   1.0f, 0.5f, 0.2f)   // Top Right
+	};
+
+	vertices.clear();
+	for (int i = 0; i < sizeof(platformVerts) / sizeof(platformVerts[0]); i++) {
+		vertices.push_back(platformVerts[i]);
+	}
+
+	blockMesh = new GL_Mesh(vertices, bindices);
+
 	// playerEntity = new Entity(meshes, vec3(0.3f, 0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.2f, 1.0f, 1.0f));
 	playerEntity = new Entity(playerMesh, vec3(0.3f, 0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.5f, 0.5f, 0.5f));
+
+	Entity * e = new Entity(blockMesh, vec3(0.3f, -0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.5f, 0.5f, 0.5f));
+	platformEntites.push_back(e);
 
 }
 
@@ -222,8 +230,8 @@ void GL_Game::Cleanup(){
 	if (playerMesh)
 		delete playerMesh;
 
-	//if (blockMesh)
-	//	delete blockMesh;
+	if (blockMesh)
+		delete blockMesh;
     
     //    return EXIT_SUCCESS;
     
