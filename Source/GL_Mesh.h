@@ -11,10 +11,10 @@
 #pragma once
 #ifndef GLEW_STATIC
 #define GLEW_STATIC
-#include <GL\glew.h> // holds all OpenGL type declarations
+#include <GL/glew.h>
 #endif // !GLEW_STATIC
 
-#include "glm\glm.hpp"
+#include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "Shader.h"

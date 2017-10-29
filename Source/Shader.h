@@ -27,6 +27,7 @@ public:
         // ensures ifstream objects can throw exceptions:
         vShaderFile.exceptions ( std::ifstream::badbit | std::ifstream::failbit);
         fShaderFile.exceptions ( std::ifstream::badbit | std::ifstream::failbit);
+        system("pwd");
         try
         {
             // Open files

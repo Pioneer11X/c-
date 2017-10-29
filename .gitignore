@@ -1,6 +1,9 @@
 #PS4 Filse
 Source/PS4SpecificFiles
 
+#Mac Directory Thingy
+*.DS_Store
+
 # Prerequisites
 *.d
 

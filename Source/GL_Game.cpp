@@ -74,8 +74,8 @@ bool GL_Game::Init(){
     // Define the viewport dimensions
     glViewport( 0, 0, screenWidth, screenHeight );
     
-	playerShader.Init("Shaders/core.vs", "Shaders/core.frag" );
-	blockShader.Init("Shaders/platform.vs", "Shaders/platform.frag");
+	playerShader.Init("../../Source/Shaders/core.vs", "../../Source/Shaders/core.frag" );
+	blockShader.Init("../../Source/Shaders/platform.vs", "../../Source/Shaders/platform.frag");
 
 	CreateMeshes();
    
