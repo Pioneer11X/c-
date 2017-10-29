@@ -102,7 +102,7 @@ void GL_Game::Update(){
 		//entity->RotateZ(1.0f);
 
 		playerEntity->GLDraw(playerShader);
-		std::cout << playerEntity->translation.x << " " << playerEntity->translation.y << std::endl;
+		// std::cout << playerEntity->translation.x << " " << playerEntity->translation.y << std::endl;
 
 		for (std::vector<Entity *>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
 			(*it)->GLDraw(blockShader);
@@ -187,23 +187,28 @@ void GL_Game::processInput(GLFWwindow * window)
 		const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
 
 		playerEntity->MoveRight(axes[0]);
+        
+        int buttonCount;
+        const unsigned char * buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+        
+#ifdef _WIN32
 		playerEntity->MoveUp(axes[1]);
+        // Press B to Close the Application for Now.
+        if (GLFW_PRESS == buttons[1]) {
+            glfwSetWindowShouldClose(window, true);
+        }
+#endif
+        
+#ifdef __APPLE__
+        playerEntity->MoveUp( -1.0f * axes[1]);
+        // Press 'O' to Close the Application for Now.
+        if (GLFW_PRESS == buttons[2]) {
+            glfwSetWindowShouldClose(window, true);
+        }
+#endif
 
-		int buttonCount;
-		const unsigned char * buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
 
-		//for (int i = 0; i < buttonCount; i++) {
 
-		//	if (GLFW_PRESS == buttons[i]) {
-		//		std::cout << "Button " << i << " : Pressed" << std::endl;
-		//	}
-
-		//}
-
-		// Press B to Close the Application for Now.
-		if (GLFW_PRESS == buttons[1]) {
-			glfwSetWindowShouldClose(window, true);
-		}
 
 	}
 	
