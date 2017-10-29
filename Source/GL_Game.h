@@ -10,7 +10,7 @@
 #define GL_Game_h
 
 #include "GenericGame.h"
-#include "Entity.h"
+
 #include <vector>
 
 // GLEW
@@ -22,22 +22,13 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
+#include "Entity.h"
+
 class GL_Game : public  GenericGame {
     
-    GLuint WIDTH, HEIGHT;
-    
     GLFWwindow * window;
-    
-	GL_Shader playerShader;
-	GL_Shader blockShader;
-
-	GL_Mesh * playerMesh;
-	GL_Mesh * blockMesh;
 
 	std::vector<GL_Mesh *> meshes;
-
-	Entity * playerEntity;
-	std::vector<Entity * > platformEntites;
 
 	void CreateMeshes();
     
@@ -48,6 +39,17 @@ class GL_Game : public  GenericGame {
 	int joyStickNumber;
     
 public:
+
+	GLuint WIDTH, HEIGHT;
+
+	GL_Shader playerShader;
+	GL_Shader blockShader;
+
+	GL_Mesh * playerMesh;
+	GL_Mesh * blockMesh;
+
+	Entity * playerEntity;
+	std::vector<Entity * > platformEntites;
     
     GL_Game();
     

@@ -25,6 +25,8 @@ class Entity
 	mat4x4 rotatMatrix;
 	mat4x4 scaleMatrix;
 
+public:
+
 	vec3 translation;
 	vec3 rotation;
 	vec3 scaling;
@@ -49,5 +51,7 @@ public:
 	void RecalculateWorldMatrix();
 
 	void GLDraw(GL_Shader _shader);
+
+	void inline setTranslate(vec3 _translate) { translation = _translate; dirty = true; }
 
 };

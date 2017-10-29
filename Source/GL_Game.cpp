@@ -102,6 +102,7 @@ void GL_Game::Update(){
 		//entity->RotateZ(1.0f);
 
 		playerEntity->GLDraw(playerShader);
+		std::cout << playerEntity->translation.x << " " << playerEntity->translation.y << std::endl;
 
 		for (std::vector<Entity *>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
 			(*it)->GLDraw(blockShader);

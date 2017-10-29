@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "GL_Game.h"
+#include "MapLoader.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -15,7 +15,11 @@ int main( )
 
 	
 	GL_Game * glGame = new GL_Game();
+
+	MapLoader m("level_1.txt");
     
+	m.LoadMap(glGame);
+
     glGame->Update();
     
     glGame->Cleanup();
