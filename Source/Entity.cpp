@@ -11,17 +11,7 @@ Entity::Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _sca
 
 	
 
-	worldMatrix = transMatrix = rotatMatrix = scaleMatrix = glm::mat4(1.0f);
-
-	//transMatrix = glm::translate(transMatrix, translation);
-	//rotatMatrix = glm::rotate(rotatMatrix, 0.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	//scaleMatrix = glm::scale(scaleMatrix, scaling);
-
-	//worldMatrix = scaleMatrix * rotatMatrix * transMatrix;
-	
-	worldMatrix = glm::translate(worldMatrix, translation);
-	worldMatrix = glm::rotate(worldMatrix, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	worldMatrix = glm::scale(worldMatrix, scaling);
+	worldMatrix = glm::mat4(1.0f);
 
 	dirty = true;
 
@@ -35,11 +25,7 @@ void Entity::MoveRight(float factor)
 {
 
 	// TODO: This is frame dependant. We need an independant timer to get a fixed rate.
-	translation.x += factor * 0.001f;
-
-	/*float newPositionX = translation.getX() + factor * 0.001f;
-	translation.setX(newPositionX);*/
-
+	translation.x += factor * 0.01f;
 	dirty = true;
 
 
@@ -49,7 +35,7 @@ void Entity::RotateZ(float factor)
 {
 
 	/*rotation.setZ(rotation.getZ() + factor * 0.001f);*/
-	rotation.z += factor * 0.001f;
+	rotation.z += glm::radians(factor);
 	dirty = true;
 
 }
@@ -62,33 +48,40 @@ void Entity::ScaleBumpy()
 
 }
 
-mat4x4 Entity::GetWorldMatrix()
+void Entity::RecalculateWorldMatrix()
 {
 
-	//if (dirty) {
+	if (dirty) {
 
-	//	transMatrix = glm::translate(transMatrix, translation);
-	//	rotatMatrix = glm::rotate(rotatMatrix, rotation.x, vec3(1.0f, 0.0f, 0.0f));
-	//	rotatMatrix = glm::rotate(rotatMatrix, rotation.y, vec3(0.0f, 1.0f, 0.0f));
-	//	rotatMatrix = glm::rotate(rotatMatrix, rotation.z, vec3(0.0f, 0.0f ,1.0f));
-	//	scaleMatrix = glm::scale(scaleMatrix, scaling);
+		worldMatrix = glm::mat4(1.0f);
 
-	//	worldMatrix = transMatrix * rotatMatrix * scaleMatrix;
+		worldMatrix = glm::translate(worldMatrix, translation);
+		worldMatrix = glm::rotate(worldMatrix, rotation.x, vec3(1.0f, 0.0f, 0.0f));
+		worldMatrix = glm::rotate(worldMatrix, rotation.y, vec3(0.0f, 1.0f, 0.0f));
+		worldMatrix = glm::rotate(worldMatrix, rotation.z, vec3(0.0f, 0.0f ,1.0f));
+		worldMatrix = glm::scale(worldMatrix, scaling);
 
-	//}
+		// worldMatrix = transMatrix * rotatMatrix * scaleMatrix;
 
-	// This depends on which renderer we are returning to...
-	// return glm::transpose(worldMatrix);
+		dirty = false;
+
+	}
+
+	 // This depends on which renderer we are returning to...
+	 // return glm::transpose(worldMatrix);
 
 	// For OpenGL.
-	return worldMatrix;
+	// return worldMatrix;
 }
 
 void Entity::GLDraw(Shader _shader)
 {
 
+	RecalculateWorldMatrix();
+
 	// Draw the meshes with the transformation of the Entity
 	unsigned int tranformLoc = glGetUniformLocation(_shader.Program, "transform");
+	// glUniformMatrix4fv(tranformLoc, 1, GL_FALSE, glm::value_ptr(glm::transpose(worldMatrix)));
 	glUniformMatrix4fv(tranformLoc, 1, GL_FALSE, glm::value_ptr(worldMatrix));
 
 	for (std::vector<GL_Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {

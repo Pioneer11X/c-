@@ -35,6 +35,10 @@ class GL_Game : public  GenericGame {
 	Entity * entity;
     
     void Draw();
+
+	void processInput(GLFWwindow *window);
+
+	int joyStickNumber;
     
 public:
     

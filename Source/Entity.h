@@ -45,7 +45,7 @@ public:
 
 	void ScaleBumpy();
 
-	mat4x4 GetWorldMatrix();
+	void RecalculateWorldMatrix();
 
 	void GLDraw(Shader _shader);
 

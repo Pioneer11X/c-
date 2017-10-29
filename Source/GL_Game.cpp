@@ -117,22 +117,61 @@ void GL_Game::Update(){
 
 		// Draw the triangle
 		ourShader.Use();
-		//glBindVertexArray(VAO);
 
-		//// glDrawArrays(GL_TRIANGLES, 0, 3);
+		//entity->RotateZ(1.0f);
 
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		//glBindVertexArray(0);
 		entity->GLDraw(ourShader);
+
+		//entity->MoveRight(1.0f);
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
+
+		processInput(window);
 	}
     
 }
 
 void GL_Game::Draw(){
     
+}
+
+void GL_Game::processInput(GLFWwindow * window)
+{
+// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
+// ---------------------------------------------------------------------------------------------------------
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+
+	joyStickNumber = glfwJoystickPresent(GLFW_JOYSTICK_1);
+
+	// std::cout << joyStickNumber << std::endl;
+
+	if (joyStickNumber != 0) {
+
+		int axesCount;
+		const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+
+		entity->MoveRight(axes[0]);
+
+		int buttonCount;
+		const unsigned char * buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+
+		//for (int i = 0; i < buttonCount; i++) {
+
+		//	if (GLFW_PRESS == buttons[i]) {
+		//		std::cout << "Button " << i << " : Pressed" << std::endl;
+		//	}
+
+		//}
+
+		// Press B to Close the Application for Now.
+		if (GLFW_PRESS == buttons[1]) {
+			glfwSetWindowShouldClose(window, true);
+		}
+
+	}
+	
 }
 
 void GL_Game::handleUserEvents(){
@@ -144,7 +183,11 @@ void GL_Game::Cleanup(){
     // Terminate GLFW, clearing any resources allocated by GLFW.
     glfwTerminate( );
 
-	// delete mesh;
+	delete entity;
+
+	for (std::vector<GL_Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
+		delete (*it);
+	}
     
     //    return EXIT_SUCCESS;
     
