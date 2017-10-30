@@ -37,6 +37,11 @@ class GL_Game : public  GenericGame {
 	void processInput(GLFWwindow *window);
 
 	int joyStickNumber;
+
+	float startTime = 0.0f;
+	float deltaTime = 0.0f;
+	float lastFrame = 0.0f;
+	float currentFrame = 0.0f;
     
 public:
 

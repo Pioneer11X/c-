@@ -93,6 +93,11 @@ void GL_Game::Update(){
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{
+
+		currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
 		glfwPollEvents();
 
@@ -200,6 +205,16 @@ void GL_Game::processInput(GLFWwindow * window)
         
 #ifdef _WIN32
 		playerEntity->MoveUp(axes[1]);
+		
+		if (axes[3] > 0.2f) {
+			gameCamera.ProcessKeyboard(Camera_Movement::FORWARD, deltaTime);
+		}
+		else if (axes[3] < -0.2f) {
+			gameCamera.ProcessKeyboard(Camera_Movement::BACKWARD, deltaTime);
+		}
+
+		gameCamera.ProcessMouseMovement(axes[2] * 5.0f, 0, GL_FALSE);
+
         // Press B to Close the Application for Now.
         if (GLFW_PRESS == buttons[1]) {
             glfwSetWindowShouldClose(window, true);
