@@ -12,7 +12,7 @@ class GenericGame
 public:
     
     Camera gameCamera;
-    
+
 	GenericGame();
 	~GenericGame();
 

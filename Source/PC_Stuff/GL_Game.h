@@ -9,7 +9,7 @@
 #ifndef GL_Game_h
 #define GL_Game_h
 
-#include "GenericGame.h"
+#include "../SharedCode/GenericGame.h"
 
 #include <vector>
 
@@ -22,7 +22,7 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
-#include "Entity.h"
+#include "GL_Mesh.h"
 
 class GL_Game : public  GenericGame {
     

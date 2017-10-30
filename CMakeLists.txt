@@ -7,22 +7,46 @@ project(CEngine)
 
 # add_subdirectory(Source)
 
-file(GLOB Engine_SRC "Source/*.cpp" "Source/*.h")
-file(GLOB Shader_SRC "Source/Shaders/*.vs" "Source/Shaders/*.frag")
+file(GLOB PC_SRC "Source/PC_Stuff/*.cpp" "Source/PC_Stuff/*.h")
+file(GLOB PC_Shader_SRC "Source/PC_Stuff/Shaders/*.vs" "Source/PC_Stuff/Shaders/*.frag")
+file(GLOB PS_SRC "Source/PS_Stuff/*.cpp" "Source/PC_Stuff/*.h")
+file(GLOB Shared_SRC "Source/SharedCode/*.cpp" "Source/SharedCode/*.h" "Source/Sharedcode/*.txt")
 
 file(GLOB GLM_Src
 	"Source/glm/*"
 )
 
-add_executable(CEngine ${Engine_SRC})
+# PC Specific Stuff.
+IF(${CMAKE_TARGET_PS})
+
+	# PS Specific Stuff.
+	add_executable(CEngine ${PS_SRC})
+	include_directories("Source/PS_Stuff/")
+
+ELSE(${CMAKE_TARGET_PS})
+
+	#PC Stuff
+	add_executable(CEngine ${PC_SRC})
+
+	source_group("Shaders" FILES ${PC_Shader_SRC})
+	target_sources(CEngine PUBLIC ${PC_Shader_SRC})
+	include_directories("Source/PC_Stuff/")
+
+ENDIF(${CMAKE_TARGET_PS})
+
+include_directories("Source/SharedStuff")
+
+# Shared Stuff like the Libraries.
+
+source_group("Shared" FILES ${Shared_SRC})
+target_sources(CEngine PUBLIC ${Shared_SRC})
+
+source_group("glm" FILES ${GLM_Src})
+target_sources(CEngine PUBLIC ${GLM_Src})
+
 
 add_definitions()
 
-source_group("glm" FILES ${GLM_Src})
-source_group("Shaders" FILES ${Shader_SRC})
-
-target_sources(CEngine PUBLIC ${GLM_Src})
-target_sources(CEngine PUBLIC ${Shader_SRC})
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 

@@ -20,7 +20,8 @@ int main( )
 	
 	GL_Game * glGame = new GL_Game();
 
-	MapLoader m("../Source/level_1.txt");
+	// MapLoader m("../Source/level_1.txt");
+	MapLoader m("../Source/SharedCode/level_1.txt");
     
 	m.LoadMap(glGame);
 

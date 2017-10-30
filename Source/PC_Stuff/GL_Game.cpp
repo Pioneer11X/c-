@@ -79,8 +79,8 @@ bool GL_Game::Init(){
 
 	glDepthRangef(0.1f, 10.0f);
     
-	playerShader.Init("../Source/Shaders/core.vs", "../Source/Shaders/core.frag" );
-	blockShader.Init("../Source/Shaders/platform.vs", "../Source/Shaders/platform.frag");
+	playerShader.Init("../Source/PC_Stuff/Shaders/core.vs", "../Source/PC_Stuff/Shaders/core.frag" );
+	blockShader.Init("../Source/PC_Stuff/Shaders/platform.vs", "../Source/PC_Stuff/Shaders/platform.frag");
 
 	CreateMeshes();
    
@@ -90,6 +90,14 @@ bool GL_Game::Init(){
 
 void GL_Game::Update(){
     
+	//for (std::vector<Entity*>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
+
+	//	b2Vec2 phyPosition = (*it)->physicsBody->GetPosition();
+
+	//	(*it)->setTranslate(vec3(phyPosition.x, phyPosition.y, (*it)->translation.z));
+
+	//}
+
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{

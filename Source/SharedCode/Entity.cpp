@@ -11,6 +11,19 @@ Entity::Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _sca
 	scaling = _scal;
 
 	
+	///*Physics Stuff*/
+
+	//b2BodyDef bodyDef;
+	//if (isDynamic) {
+	//	bodyDef.type = b2_dynamicBody;
+	//}
+	//bodyDef.position.Set(translation.x * 100.0f, translation.y * 100.0f);
+
+	//physicsBody = (*world).CreateBody(&bodyDef);
+
+	///*Physics Stuff End*/
+
+
 
 	worldMatrix = glm::mat4(1.0f);
 
@@ -29,6 +42,18 @@ Entity::Entity(GL_Mesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal)
 	translation = _trans;
 	rotation = _rot;
 	scaling = _scal;
+
+	///*Physics Stuff*/
+
+	//b2BodyDef bodyDef;
+	//if (isDynamic) {
+	//	bodyDef.type = b2_dynamicBody;
+	//}
+	//bodyDef.position.Set(translation.x * 100.0f, translation.y * 100.0f);
+
+	//physicsBody = (*world).CreateBody(&bodyDef);
+
+	///*Physics Stuff End*/
 
 	dirty = true;
 

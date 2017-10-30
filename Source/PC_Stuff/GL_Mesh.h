@@ -14,8 +14,8 @@
 #include <GL/glew.h>
 #endif // !GLEW_STATIC
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+#include "../glm/glm.hpp"
+#include "../glm/gtc/matrix_transform.hpp"
 
 #include "Shader.h"
 
@@ -24,8 +24,8 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include "BasicVertex.h"
-#include "GenericMesh.h"
+#include "../SharedCode/BasicVertex.h"
+#include "../SharedCode/GenericMesh.h"
 
 using namespace std;
 
