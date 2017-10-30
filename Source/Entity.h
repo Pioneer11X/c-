@@ -3,14 +3,10 @@
 
 #include "GL_Mesh.h"
 
-#include "glm/glm.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include "glm/gtx/transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
-
 #include "Shader.h"
 
 #include <vector>
+#include "Camera.h"
 
 using namespace std;
 using namespace glm;
@@ -50,7 +46,7 @@ public:
 
 	void RecalculateWorldMatrix();
 
-	void GLDraw(GL_Shader _shader);
+	void GLDraw(GL_Shader _shader, Camera gameCamera);
 
 	void inline setTranslate(vec3 _translate) { translation = _translate; dirty = true; }
 

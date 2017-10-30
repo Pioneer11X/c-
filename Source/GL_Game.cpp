@@ -26,6 +26,8 @@ GL_Game::GL_Game(){
 	window = nullptr;
 
     Init();
+    
+    gameCamera = Camera(1);
 
 }
 
@@ -101,11 +103,11 @@ void GL_Game::Update(){
 
 		//entity->RotateZ(1.0f);
 
-		playerEntity->GLDraw(playerShader);
+		playerEntity->GLDraw(playerShader, this->gameCamera);
 		// std::cout << playerEntity->translation.x << " " << playerEntity->translation.y << std::endl;
 
 		for (std::vector<Entity *>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
-			(*it)->GLDraw(blockShader);
+			(*it)->GLDraw(blockShader, this->gameCamera);
 		}
 
 		//entity->MoveRight(1.0f);

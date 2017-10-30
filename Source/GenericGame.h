@@ -4,11 +4,15 @@
 #include <stdint.h>
 #include <time.h>
 #include <limits>
+#include "Camera.h"
 
 class GenericGame
 {
 
 public:
+    
+    Camera gameCamera;
+    
 	GenericGame();
 	~GenericGame();
 

@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+
 Entity::Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _scal)
 {
 
@@ -97,7 +98,7 @@ void Entity::RecalculateWorldMatrix()
 	// return worldMatrix;
 }
 
-void Entity::GLDraw(GL_Shader _shader)
+void Entity::GLDraw(GL_Shader _shader, Camera gameCamera)
 {
 
 	RecalculateWorldMatrix();
@@ -107,6 +108,11 @@ void Entity::GLDraw(GL_Shader _shader)
 
 	// glUniformMatrix4fv(tranformLoc, 1, GL_FALSE, glm::value_ptr(glm::transpose(worldMatrix)));
 	glUniformMatrix4fv(tranformLoc, 1, GL_FALSE, glm::value_ptr(worldMatrix));
+    
+    // camera/view transformation
+    unsigned int viewLoc = glGetUniformLocation(_shader.Program, "view");
+    glm::mat4 view = glm::lookAt(gameCamera.position, gameCamera.position + gameCamera.forward, gameCamera.up);
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 
 	for (std::vector<GL_Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
 
