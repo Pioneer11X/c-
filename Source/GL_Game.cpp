@@ -27,7 +27,8 @@ GL_Game::GL_Game(){
 
     Init();
     
-    gameCamera = Camera(1);
+    gameCamera = Camera(vec3(0.0f, 0.0f, 3.0f));
+
 
 }
 
@@ -75,9 +76,11 @@ bool GL_Game::Init(){
     
     // Define the viewport dimensions
     glViewport( 0, 0, screenWidth, screenHeight );
+
+	glDepthRangef(0.1f, 10.0f);
     
-	playerShader.Init("../../Source/Shaders/core.vs", "../../Source/Shaders/core.frag" );
-	blockShader.Init("../../Source/Shaders/platform.vs", "../../Source/Shaders/platform.frag");
+	playerShader.Init("../Source/Shaders/core.vs", "../Source/Shaders/core.frag" );
+	blockShader.Init("../Source/Shaders/platform.vs", "../Source/Shaders/platform.frag");
 
 	CreateMeshes();
    
@@ -97,6 +100,8 @@ void GL_Game::Update(){
 		// Clear the colorbuffer
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// gameCamera.ProcessKeyboard(Camera_Movement::BACKWARD, 0.1f);
 
 		// Draw the triangle
 		playerShader.Use();

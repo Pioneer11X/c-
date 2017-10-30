@@ -69,7 +69,7 @@ IF(WIN32)
 	target_link_libraries(CEngine "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/_Win/GLEW/lib/glew32s.lib")
 	target_link_libraries(CEngine "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/_Win/GLFW/lib/glfw3.lib")
 	
-	set_target_properties(CEngine PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Source/")
+	# set_target_properties(CEngine PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Source/")
 
 
 ENDIF(WIN32)

@@ -110,9 +110,13 @@ void Entity::GLDraw(GL_Shader _shader, Camera gameCamera)
 	glUniformMatrix4fv(tranformLoc, 1, GL_FALSE, glm::value_ptr(worldMatrix));
     
     // camera/view transformation
-    unsigned int viewLoc = glGetUniformLocation(_shader.Program, "view");
-    glm::mat4 view = glm::lookAt(gameCamera.position, gameCamera.position + gameCamera.forward, gameCamera.up);
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+	// pass projection matrix to shader (note that in this case it could change every frame)
+	glm::mat4 projection = glm::perspective(glm::radians(gameCamera.Zoom), float(800/600), 0.1f, 100.0f);
+	_shader.setMat4("projection", projection);
+
+	// camera/view transformation
+	glm::mat4 view = gameCamera.GetViewMatrix();
+	_shader.setMat4("view", view);
 
 	for (std::vector<GL_Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
 
