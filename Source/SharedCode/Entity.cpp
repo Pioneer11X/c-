@@ -1,7 +1,7 @@
 #include "Entity.h"
 
 
-Entity::Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _scal)
+Entity::Entity(std::vector<Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _scal)
 {
 
 	meshes = _meshes;
@@ -31,11 +31,11 @@ Entity::Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _sca
 
 }
 
-Entity::Entity(GL_Mesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal)
+Entity::Entity(Mesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal)
 {
 
 	// Make a single element Mesh and pass it to the constructor
-	std::vector<GL_Mesh *> _meshes;
+	std::vector<Mesh *> _meshes;
 	_meshes.push_back(_mesh);
 
 	meshes = _meshes;
@@ -143,9 +143,9 @@ void Entity::GLDraw(GL_Shader _shader, Camera gameCamera)
 	glm::mat4 view = gameCamera.GetViewMatrix();
 	_shader.setMat4("view", view);
 
-	for (std::vector<GL_Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
+	for (std::vector<Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
 
-		((GL_Mesh *)(*it))->Draw(_shader);
+		((Mesh *)(*it))->Draw(_shader);
 
 	}
 

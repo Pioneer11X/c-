@@ -1,7 +1,7 @@
 #pragma once
 #include "BasicVertex.h"
 
-#include "GL_Mesh.h"
+#include "Mesh.h"
 
 #include "Shader.h"
 
@@ -14,7 +14,7 @@ using namespace glm;
 class Entity
 {
 
-	std::vector<GL_Mesh *> meshes;
+	std::vector<Mesh *> meshes;
 
 	mat4x4 worldMatrix;
 	mat4x4 transMatrix;
@@ -31,8 +31,8 @@ public:
 
 public:
 
-	Entity(std::vector<GL_Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _scal);
-	Entity(GL_Mesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal);
+	Entity(std::vector<Mesh *> _meshes, vec3 _trans, vec3 _rot, vec3 _scal);
+	Entity(Mesh * _mesh, vec3 _trans, vec3 _rot, vec3 _scal);
 	~Entity();
 
 	void MoveRight(float factor);

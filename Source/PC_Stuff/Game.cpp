@@ -162,7 +162,7 @@ void Game::CreateMeshes()
 		vertices.push_back(playerVerts[i]);
 	}
 
-	playerMesh = new GL_Mesh(vertices, bindices);
+	playerMesh = new Mesh(vertices, bindices);
 
 	// Setup Platform Mesh
 	BasicVertex platformVerts[] = {
@@ -177,7 +177,7 @@ void Game::CreateMeshes()
 		vertices.push_back(platformVerts[i]);
 	}
 
-	blockMesh = new GL_Mesh(vertices, bindices);
+	blockMesh = new Mesh(vertices, bindices);
 
 	// playerEntity = new Entity(meshes, vec3(0.3f, 0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.2f, 1.0f, 1.0f));
 	playerEntity = new Entity(playerMesh, vec3(0.3f, 0.2f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.5f, 0.5f, 0.5f));
@@ -260,7 +260,7 @@ void Game::Cleanup(){
 		delete (*it);
 	}
 
-	for (std::vector<GL_Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
+	for (std::vector<Mesh *>::iterator it = meshes.begin(); it != meshes.end(); it++) {
 		delete (*it);
 	}
 

@@ -22,13 +22,13 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
-#include "GL_Mesh.h"
+#include "Mesh.h"
 
 class Game : public  GenericGame {
     
     GLFWwindow * window;
 
-	std::vector<GL_Mesh *> meshes;
+	std::vector<Mesh *> meshes;
 
 	void CreateMeshes();
     
@@ -50,8 +50,8 @@ public:
 	GL_Shader playerShader;
 	GL_Shader blockShader;
 
-	GL_Mesh * playerMesh;
-	GL_Mesh * blockMesh;
+	Mesh * playerMesh;
+	Mesh * blockMesh;
 
 	Entity * playerEntity;
 	std::vector<Entity * > platformEntites;
