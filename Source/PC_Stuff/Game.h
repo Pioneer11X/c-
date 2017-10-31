@@ -1,13 +1,13 @@
 //
-//  GL_Game.h
+//  Game.h
 //  Engine
 //
 //  Created by Sravan Karuturi on 10/24/17.
 //
 
 
-#ifndef GL_Game_h
-#define GL_Game_h
+#ifndef Game_h
+#define Game_h
 
 #include "../SharedCode/GenericGame.h"
 
@@ -24,7 +24,7 @@
 
 #include "GL_Mesh.h"
 
-class GL_Game : public  GenericGame {
+class Game : public  GenericGame {
     
     GLFWwindow * window;
 
@@ -56,7 +56,7 @@ public:
 	Entity * playerEntity;
 	std::vector<Entity * > platformEntites;
     
-    GL_Game();
+    Game();
     
     bool Init();
     
@@ -66,8 +66,8 @@ public:
     
     void handleUserEvents();
     
-    ~GL_Game() { };
+    ~Game() { };
     
 };
 
-#endif /* GL_Game_h */
+#endif /* Game_h */

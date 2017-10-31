@@ -1,5 +1,5 @@
 //
-//  GL_Game.cpp
+//  Game.cpp
 //  Engine
 //
 //  Created by Sravan Karuturi on 10/24/17.
@@ -8,12 +8,12 @@
 #pragma once
 #include <stdio.h>
 #include <iostream>
-#include "GL_Game.h"
+#include "Game.h"
 
 
 using namespace std;
 
-GL_Game::GL_Game(){
+Game::Game(){
     
     // Window dimensions
     WIDTH = 800;
@@ -32,7 +32,7 @@ GL_Game::GL_Game(){
 
 }
 
-bool GL_Game::Init(){
+bool Game::Init(){
    
     // Init calls for OpenGL.
     
@@ -79,8 +79,9 @@ bool GL_Game::Init(){
 
 	glDepthRangef(0.1f, 10.0f);
     
-	playerShader.Init("../Source/PC_Stuff/Shaders/core.vs", "../Source/PC_Stuff/Shaders/core.frag" );
-	blockShader.Init("../Source/PC_Stuff/Shaders/platform.vs", "../Source/PC_Stuff/Shaders/platform.frag");
+    system("pwd");
+	playerShader.Init("../../Source/PC_Stuff/Shaders/core.vs", "../../Source/PC_Stuff/Shaders/core.frag" );
+	blockShader.Init("../../Source/PC_Stuff/Shaders/platform.vs", "../../Source/PC_Stuff/Shaders/platform.frag");
 
 	CreateMeshes();
    
@@ -88,7 +89,7 @@ bool GL_Game::Init(){
     
 }
 
-void GL_Game::Update(){
+void Game::Update(){
     
 	//for (std::vector<Entity*>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
 
@@ -138,7 +139,7 @@ void GL_Game::Update(){
     
 }
 
-void GL_Game::CreateMeshes()
+void Game::CreateMeshes()
 {
 
 	// Setup Player Mesh
@@ -186,11 +187,11 @@ void GL_Game::CreateMeshes()
 
 }
 
-void GL_Game::Draw(){
+void Game::Draw(){
     
 }
 
-void GL_Game::processInput(GLFWwindow * window)
+void Game::processInput(GLFWwindow * window)
 {
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
@@ -244,11 +245,11 @@ void GL_Game::processInput(GLFWwindow * window)
 	
 }
 
-void GL_Game::handleUserEvents(){
+void Game::handleUserEvents(){
     
 }
 
-void GL_Game::Cleanup(){
+void Game::Cleanup(){
 
     // Terminate GLFW, clearing any resources allocated by GLFW.
     glfwTerminate( );

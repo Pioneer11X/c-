@@ -8,7 +8,7 @@
 #include <fstream>
 #include <string>
 
-#include "GL_Game.h"
+#include "Game.h"
 
 class MapLoader {
 
@@ -18,7 +18,7 @@ public:
 
 	MapLoader(char * _fileName) { fileName = _fileName; };
 
-	bool LoadMap( GL_Game * _game ) {
+	bool LoadMap( Game * _game ) {
 
 		float x = -1, y = 1;
 

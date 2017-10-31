@@ -1,12 +1,12 @@
 //
-//  GL_Mesh.h
+//  Mesh.h
 //  Engine
 //
 //  Created by Sravan Karuturi on 10/26/17.
 //
 
-#ifndef GL_Mesh_h
-#define GL_Mesh_h
+#ifndef Mesh_h
+#define Mesh_h
 
 #pragma once
 #ifndef GLEW_STATIC
@@ -29,7 +29,7 @@
 
 using namespace std;
 
-class GL_Mesh {
+class Mesh {
 public:
 	/*  Mesh Data  */
 	vector<BasicVertex> vertices;
@@ -38,7 +38,7 @@ public:
 
 	/*  Functions  */
 	// constructor
-	GL_Mesh(vector<BasicVertex> vertices, vector<uint32_t> indices)
+	Mesh(vector<BasicVertex> vertices, vector<uint32_t> indices)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
@@ -98,4 +98,4 @@ private:
 	}
 };
 
-#endif /* GL_Mesh_h */
+#endif /* Mesh_h */
