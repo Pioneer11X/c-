@@ -21,7 +21,7 @@ int main( )
 	Game * glGame = new Game();
 
 	// MapLoader m("../Source/level_1.txt");
-	MapLoader m("../../Source/SharedCode/level_1.txt");
+	MapLoader m("D:/Profiles/Sravan/c-/Source/SharedCode/level_1.txt");
     
 	m.LoadMap(glGame);
 

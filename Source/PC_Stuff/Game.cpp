@@ -18,10 +18,6 @@ Game::Game(){
     // Window dimensions
     WIDTH = 800;
     HEIGHT = 600;
-    
-    // Build and compile our shader program
-	playerShader = GL_Shader();
-	blockShader = GL_Shader();
 
 	window = nullptr;
 
@@ -32,7 +28,7 @@ Game::Game(){
 
 }
 
-bool Game::Init(){
+void Game::Init(){
    
     // Init calls for OpenGL.
     
@@ -60,7 +56,8 @@ bool Game::Init(){
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate( );
         
-        return EXIT_FAILURE;
+        // return EXIT_FAILURE;
+		return;
     }
     
     glfwMakeContextCurrent( window );
@@ -71,33 +68,20 @@ bool Game::Init(){
     if ( GLEW_OK != glewInit( ) )
     {
         std::cout << "Failed to initialize GLEW" << std::endl;
-        return EXIT_FAILURE;
+        // return EXIT_FAILURE;
+		return;
     }
     
-    // Define the viewport dimensions
-    glViewport( 0, 0, screenWidth, screenHeight );
-
-	glDepthRangef(0.1f, 10.0f);
-    
-    system("pwd");
-	playerShader.Init("../../Source/PC_Stuff/Shaders/core.vs", "../../Source/PC_Stuff/Shaders/core.frag" );
-	blockShader.Init("../../Source/PC_Stuff/Shaders/platform.vs", "../../Source/PC_Stuff/Shaders/platform.frag");
+	renderer.Init();
 
 	CreateMeshes();
    
-    return EXIT_SUCCESS;
+    // return EXIT_SUCCESS;
+	return;
     
 }
 
 void Game::Update(){
-    
-	//for (std::vector<Entity*>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
-
-	//	b2Vec2 phyPosition = (*it)->physicsBody->GetPosition();
-
-	//	(*it)->setTranslate(vec3(phyPosition.x, phyPosition.y, (*it)->translation.z));
-
-	//}
 
 	// Game loop
 	while (!glfwWindowShouldClose(window))
@@ -116,18 +100,22 @@ void Game::Update(){
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// gameCamera.ProcessKeyboard(Camera_Movement::BACKWARD, 0.1f);
+		
 
 		// Draw the triangle
-		playerShader.Use();
+		renderer.playerShader.Use();
 
-		//entity->RotateZ(1.0f);
+		// renderer.drawScene();
+		renderer.drawEntity(playerEntity, renderer.playerShader);
 
-		playerEntity->GLDraw(playerShader, this->gameCamera);
-		// std::cout << playerEntity->translation.x << " " << playerEntity->translation.y << std::endl;
+		////entity->RotateZ(1.0f);
 
-		for (std::vector<Entity *>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
-			(*it)->GLDraw(blockShader, this->gameCamera);
-		}
+		//playerEntity->Draw(renderer.playerShader, this->gameCamera);
+		//// std::cout << playerEntity->translation.x << " " << playerEntity->translation.y << std::endl;
+
+		//for (std::vector<Entity *>::iterator it = platformEntites.begin(); it != platformEntites.end(); it++) {
+		//	(*it)->Draw(renderer.blockShader, this->gameCamera);
+		//}
 
 		//entity->MoveRight(1.0f);
 

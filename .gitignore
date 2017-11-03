@@ -39,6 +39,7 @@ Source/PS_Stuff
 
 #Build Directory
 builds
+OpenGLBuild
 Win32
 x64
 *.log

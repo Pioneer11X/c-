@@ -22,7 +22,7 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
-#include "Mesh.h"
+#include "RenderManager.h"
 
 class Game : public  GenericGame {
     
@@ -45,20 +45,21 @@ class Game : public  GenericGame {
     
 public:
 
-	GLuint WIDTH, HEIGHT;
+	RenderManager renderer;
 
-	GL_Shader playerShader;
-	GL_Shader blockShader;
+	GLuint WIDTH, HEIGHT;
 
 	Mesh * playerMesh;
 	Mesh * blockMesh;
+
+	Camera gameCamera;
 
 	Entity * playerEntity;
 	std::vector<Entity * > platformEntites;
     
     Game();
     
-    bool Init();
+    void Init();
     
     void Update();
     

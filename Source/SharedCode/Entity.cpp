@@ -123,7 +123,7 @@ void Entity::RecalculateWorldMatrix()
 	// return worldMatrix;
 }
 
-void Entity::GLDraw(GL_Shader _shader, Camera gameCamera)
+void Entity::Draw(Shader _shader, Camera gameCamera)
 {
 
 	RecalculateWorldMatrix();

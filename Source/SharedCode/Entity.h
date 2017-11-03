@@ -18,12 +18,13 @@ class Entity
 
 	std::vector<Mesh *> meshes;
 
-	mat4x4 worldMatrix;
 	mat4x4 transMatrix;
 	mat4x4 rotatMatrix;
 	mat4x4 scaleMatrix;
 
 public:
+
+	mat4x4 worldMatrix;
 
 	vec3 translation;
 	vec3 rotation;
@@ -48,7 +49,8 @@ public:
 
 	void RecalculateWorldMatrix();
 
-	void GLDraw(GL_Shader _shader, Camera gameCamera);
+	// void GLDraw(GL_Shader _shader, Camera gameCamera);
+	void Draw(Shader _shader, Camera gameCamera);
 
 	void inline setTranslate(vec3 _translate) { translation = _translate; dirty = true; }
 

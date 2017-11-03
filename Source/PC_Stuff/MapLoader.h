@@ -25,7 +25,21 @@ public:
 		// float xStep = _game.HEIGHT / 10;
 		float xStep = 2.0f / 10;
 
-		std::ifstream file(fileName);
+		_game->playerEntity = new Entity(_game->playerMesh, vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 1.0f, 1.0f));
+
+		_game->playerEntity->setTranslate(vec3(-0.5f, 0.0f, 1.0f));
+
+		return true;
+
+
+		std::ifstream file;
+		file.open(fileName);
+
+		if ( !file || file.fail() ) {
+			std::cout << "Map cannot be loaded. Please check the file\n";
+			system("pause");
+		}
+
 		std::string str;
 
 		Entity * e;
