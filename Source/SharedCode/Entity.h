@@ -8,6 +8,8 @@
 #include <vector>
 #include "Camera.h"
 
+#include "Physics.h"
+
 using namespace std;
 using namespace glm;
 
