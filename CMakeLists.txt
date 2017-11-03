@@ -9,12 +9,14 @@ project(CEngine)
 
 file(GLOB PC_SRC "Source/PC_Stuff/*.cpp" "Source/PC_Stuff/*.h")
 file(GLOB PC_Shader_SRC "Source/PC_Stuff/Shaders/*.vs" "Source/PC_Stuff/Shaders/*.frag")
-file(GLOB PS_SRC "Source/PS_Stuff/*.cpp" "Source/PC_Stuff/*.h")
+file(GLOB PS_SRC "Source/PS_Stuff/*.cpp" "Source/PS_Stuff/*.h")
 file(GLOB Shared_SRC "Source/SharedCode/*.cpp" "Source/SharedCode/*.h" "Source/Sharedcode/*.txt")
 
 file(GLOB GLM_Src
 	"Source/glm/*"
 )
+
+message(${CMAKE_TARGET_PS})
 
 # PC Specific Stuff.
 IF(${CMAKE_TARGET_PS})
