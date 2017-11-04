@@ -41,7 +41,7 @@ public:
 
 
 		playerShader.Init("../Source/PC_Stuff/Shaders/core.vs", "../Source/PC_Stuff/Shaders/core.frag");
-		playerShader.Init("../Source/PC_Stuff/Shaders/platform.vs", "../Source/PC_Stuff/Shaders/platform.frag");
+		blockShader.Init("../Source/PC_Stuff/Shaders/platform.vs", "../Source/PC_Stuff/Shaders/platform.frag");
 
 		camera = Camera();
 
@@ -68,8 +68,13 @@ public:
 	void drawEntity(Entity * e, Shader _shader) {
 		e->RecalculateWorldMatrix();
 
+		playerShader.Use();
+
+		//int programID = glGetUniformLocation(playerShader.Program, "transform");
+		//glUniformMatrix4fv(programID, 1, GL_FALSE, glm::value_ptr(e->worldMatrix));
+
 		// Set it in there
-		playerShader.setMat4("transform", playerEntity->worldMatrix);
+		playerShader.setMat4("transform", e->worldMatrix);
 		playerShader.setMat4("projection", glm::perspective(glm::radians(camera.Zoom), float(DISPLAY_HEIGHT / DISPLAY_WIDTH), 0.1f, 100.0f));
 		playerShader.setMat4("view", camera.GetViewMatrix());
 		e->Draw(playerShader, camera);
